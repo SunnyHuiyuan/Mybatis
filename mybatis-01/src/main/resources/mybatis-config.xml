@@ -18,6 +18,7 @@
     </environments>
 
     <!--每一个mapper.xml都需要在核心配置文件中注册！-->
+    <!--资源路径用 / 来表示-->
     <mappers>
         <mapper resource="com/local/dao/UserMapper.xml"/>
     </mappers>

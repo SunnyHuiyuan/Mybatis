@@ -8,6 +8,17 @@
     <!--这是一个查询语句-->
     <!--id：对应的是接口方法-->
     <!--用resultType来获得查询后的结果-->
+
+    <!--模糊查询-->
+    <!--
+    select * from user where id=?
+    select * from user where id=1 or i=1   会引起sql注入
+    如在sql拼接中使用通配符就会造成sql注入
+    -->
+    <select id="getUserLike" resultType="com.local.pojo.User">
+        select * from mybatis.user where name like #{value};
+    </select>
+
     <select id="getUserList" resultType="com.local.pojo.User">
         select * from mybatis.user;
     </select>
@@ -17,9 +28,20 @@
         select * from mybatis.user where id=#{id};
     </select>
 
-    <!--对象中的属性可以直接取出来-->
+    <select id="getUserById2" parameterType="map" resultType="com.local.pojo.User">
+        select * from user where id=#{id} and name=#{name};
+    </select>
+
+    <!--对象中的属性可以直接取出来,对象中的属性要和#{}里面的值一一对应-->
     <insert id="addUser" parameterType="com.local.pojo.User">
         insert into mybatis.user (id,name,password) values (#{id},#{name},#{password});
+    </insert>
+
+    <!--
+    传递map的key,当实体类或者数据库中的表，字段或者参数过多时，可以考虑使用map
+    -->
+    <insert id="addUser2" parameterType="map">
+        insert into mybatis.user (id,name,password) values (#{uid},#{name1},#{password1});
     </insert>
 
     <update id="updateUser" parameterType="com.local.pojo.User">
