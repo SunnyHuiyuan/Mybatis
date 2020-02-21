@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace:绑定一个对应的DAO/mapper接口-->
+<!--namespace中的包名要和DAO/mapper接口的包名一致-->
+<mapper namespace="com.local.dao.UserMapper">
+    <!--这是一个查询语句-->
+    <!--id：对应的是接口方法-->
+    <!--用resultType来获得查询后的结果-->
+
+    <!--模糊查询-->
+    <!--
+    select * from user where id=?
+    select * from user where id=1 or i=1   会引起sql注入
+    如在sql拼接中使用通配符就会造成sql注入
+    -->
+    <select id="getUserList" resultType="com.local.pojo.User">
+        select * from mybatis.user;
+    </select>
+
+    <!--parameter:参数类型-->
+    <select id="getUserById" parameterType="int" resultType="com.local.pojo.User">
+        select * from mybatis.user where id=#{id};
+    </select>
+
+    <!--对象中的属性可以直接取出来,对象中的属性要和#{}里面的值一一对应-->
+    <insert id="addUser" parameterType="com.local.pojo.User">
+        insert into mybatis.user (id,name,password) values (#{id},#{name},#{password});
+    </insert>
+
+    <update id="updateUser" parameterType="com.local.pojo.User">
+        update mybatis.user set name=#{name},password=#{password} where id=#{id};
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.user where id=#{id};
+    </delete>
+</mapper>
